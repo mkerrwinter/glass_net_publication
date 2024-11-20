@@ -38,9 +38,10 @@ for r in range(10):
             dataset = 'binary_PCA_MNIST'
             loss_function = 'quadratic_hinge'
             hidden_layers = depth*[width]
-            
-            ic_path = '{}models/binary_pca_mnist_w{}_ic_{}'.format(base_path, width, r)
-            
+
+            ic_path = '{}models/binary_pca_mnist_w{}_ic_{}'.format(
+                base_path, width, r)
+
             model_params = {}
             model_params['batch_size'] = 100
             model_params['dataset'] = dataset
@@ -51,20 +52,21 @@ for r in range(10):
             model_params['N_outputs'] = 1
             model_params['h_layer_widths'] = hidden_layers
             model_params['initial_condition_path'] = ic_path
-            
-            model_name = 'binary_pca_mnist_ic{}_w{}_b100_reg{}'.format(r, width, L2_str)
-            
-            outpath = base_path + 'models/{}/{}_model_params.json'.format(model_name, 
-                                                                            model_name)
-            
+
+            model_name = 'binary_pca_mnist_ic{}_w{}_b100_reg{}'.format(
+                r, width, L2_str)
+
+            outpath = base_path + 'models/{}/{}_model_params.json'.format(model_name,
+                                                                          model_name)
+
             output_dir = '{}models/{}/'.format(base_path, model_name)
             dir_exists = os.path.isdir(output_dir)
             if not dir_exists:
                 os.mkdir(output_dir)
-            
+
             with open(outpath, 'w') as outfile:
                 json.dump(model_params, outfile)
-                
+
             w_for_printing.append(width)
             L2_for_printing.append(L2_str)
             rep_for_printing.append(r)
@@ -113,10 +115,11 @@ ics = np.arange(10)
 for ic in ics:
     for kT_count, kT in enumerate(kTs):
         kT_str = kT_strs[kT_count]
-        ic_path = '{}models/binary_pca_mnist_ic{}_w30_b100_reg0_010'.format(base_path, ic)
-        
+        ic_path = '{}models/binary_pca_mnist_ic{}_w30_b100_reg0_010'.format(
+            base_path, ic)
+
         hidden_layers = depth*[width]
-        
+
         model_params = {}
         model_params['batch_size'] = -1
         model_params['dataset'] = 'binary_PCA_MNIST'
@@ -128,23 +131,24 @@ for ic in ics:
         model_params['h_layer_widths'] = hidden_layers
         model_params['kT'] = kT
         model_params['initial_condition_path'] = ic_path
-        
-        model_name = 'binary_pca_mnist_b100_Langevin_relaxation_ic{}_w{}_kT{}_reg{}'.format(ic, width, kT_str, L2_str)
-        
-        outpath = base_path + 'models/{}/{}_model_params.json'.format(model_name, 
-                                                                        model_name)
-        
+
+        model_name = 'binary_pca_mnist_b100_Langevin_relaxation_ic{}_w{}_kT{}_reg{}'.format(
+            ic, width, kT_str, L2_str)
+
+        outpath = base_path + 'models/{}/{}_model_params.json'.format(model_name,
+                                                                      model_name)
+
         output_dir = '{}models/{}/'.format(base_path, model_name)
         dir_exists = os.path.isdir(output_dir)
         if not dir_exists:
             os.mkdir(output_dir)
-        
+
         with open(outpath, 'w') as outfile:
             json.dump(model_params, outfile)
-        
+
         kT_for_printing.append(kT_str)
         rep_for_printing.append(ic)
-           
+
 kT_string = '('
 for kT in kT_for_printing:
     kT_str = str(kT)
